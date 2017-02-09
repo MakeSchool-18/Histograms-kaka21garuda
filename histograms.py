@@ -18,12 +18,19 @@ class Dictogram(dict):
         """Update this histogram with the items in the given iterable"""
         for item in iterable:
             # TODO: increment item count
-            pass
+            if item not in self:
+                self[item] = 1
+            else:
+                self[item] += 1
+        self.types = len(self.keys())
+        self.tokens = sum(self.values())
+        pass
 
     def count(self, item):
         """Return the count of the given item in this histogram, or 0"""
-        # TODO: retrieve item count
-        pass
+        if self.get(item) < 1:
+            return 0
+        return self.get(item)
 
 
 class Listogram(list):
@@ -39,7 +46,7 @@ class Listogram(list):
     def update(self, iterable):
         """Update this histogram with the items in the given iterable"""
         for item in iterable:
-            # TODO: increment item count
+
             pass
 
     def count(self, item):
