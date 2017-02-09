@@ -45,13 +45,16 @@ class Listogram(list):
 
     def update(self, iterable):
         """Update this histogram with the items in the given iterable"""
-        for item in iterable:
-
-            pass
+        for item in list(set(iterable)):
+            self.append((item, iterable.count(item)))
+        pass
 
     def count(self, item):
         """Return the count of the given item in this histogram, or 0"""
-        # TODO: retrieve item count
+        for index_tuple, item_tuple in enumerate(self):
+            if self[index_tuple][0] == item:
+                return self[index_tuple][1]
+        return 0
         pass
 
     def __contains__(self, item):
