@@ -45,10 +45,15 @@ class Listogram(list):
 
     def update(self, iterable):
         """Update this histogram with the items in the given iterable"""
-        for item in list(set(iterable)):
-            self.append((item, iterable.count(item)))
-            self.tokens += iterable.count(item)
-        self.types = len(list(set(iterable)))
+        for item in iterable:
+            if self.__contains__(item):
+                self[self._index(item)] = list(self[self._index(item)])
+                self[self._index(item)][1] += 1
+                self[self._index(item)] = tuple(self[self._index(item)])
+            else:
+                self.append((item, 1))
+        self.types = len(self)
+        self.tokens = sum([x[1] for x in self])
         pass
 
     def count(self, item):
@@ -79,13 +84,13 @@ def test_histogram(text_list):
     print('text list:', text_list)
 
     hist_dict = Dictogram(text_list)
-    print("TYPES DICT: ", hist_dict.types)
-    print("TOKEN DICT: ", hist_dict.tokens)
+    # print("TYPES DICT: ", hist_dict.types)
+    # print("TOKEN DICT: ", hist_dict.tokens)
     print('dictogram:', hist_dict)
 
     hist_list = Listogram(text_list)
-    print("TYPES LIST: ", hist_list.types)
-    print("TOKEN LIST: ", hist_list.tokens)
+    print("TYPES List: ", hist_list.types)
+    print("TOKEN List: ", hist_list.tokens)
     print('listogram:', hist_list)
 
 
