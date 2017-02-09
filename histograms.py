@@ -47,6 +47,8 @@ class Listogram(list):
         """Update this histogram with the items in the given iterable"""
         for item in list(set(iterable)):
             self.append((item, iterable.count(item)))
+            self.tokens += iterable.count(item)
+        self.types = len(list(set(iterable)))
         pass
 
     def count(self, item):
@@ -59,22 +61,31 @@ class Listogram(list):
 
     def __contains__(self, item):
         """Return True if the given item is in this histogram, or False"""
-        # TODO: check if item is in histogram
+        for index_tuple, item_tuple in enumerate(self):
+            if self[index_tuple][0] == item:
+                return True
+        return False
         pass
 
     def _index(self, target):
         """Return the index of the (target, count) entry if found, or None"""
-        # TODO: implement linear search to find an item's index
-        pass
+        for index_tuple, item_tuple in enumerate(self):
+            if self[index_tuple][0] == target:
+                return index_tuple
+                pass
 
 
 def test_histogram(text_list):
     print('text list:', text_list)
 
     hist_dict = Dictogram(text_list)
+    print("TYPES DICT: ", hist_dict.types)
+    print("TOKEN DICT: ", hist_dict.tokens)
     print('dictogram:', hist_dict)
 
     hist_list = Listogram(text_list)
+    print("TYPES LIST: ", hist_list.types)
+    print("TOKEN LIST: ", hist_list.tokens)
     print('listogram:', hist_list)
 
 
