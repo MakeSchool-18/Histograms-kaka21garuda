@@ -18,11 +18,16 @@ class Dictogram(dict):
         """Update this histogram with the items in the given iterable"""
         for item in iterable:
             # TODO: increment item count
+            # Checking if the item exist in the object (Dictionary)
             if item not in self:
+                # if not initialize the key's value as 1
                 self[item] = 1
             else:
+                # if it already exist increment the value by 1
                 self[item] += 1
+        # The number of distinct item in the dictionary, just list down all the dictionary keys.
         self.types = len(self.keys())
+        # The number of tokens, sum function to add all values in the dictionary
         self.tokens = sum(self.values())
         pass
 
@@ -46,13 +51,24 @@ class Listogram(list):
     def update(self, iterable):
         """Update this histogram with the items in the given iterable"""
         for item in iterable:
+            # Checking if the item exist or not using __contains__ function
             if self.__contains__(item):
+                # if yes change the data type of the element into list
+                # this is because tuple is immutable
                 self[self._index(item)] = list(self[self._index(item)])
+                # increment the frequency of the word
                 self[self._index(item)][1] += 1
+                # change again the datatype of the element into the original
                 self[self._index(item)] = tuple(self[self._index(item)])
             else:
+                # if the item not exist, initialize the frequency with 1
+                # append a tuple into the list
                 self.append((item, 1))
+        # distinct value is the length of the self array
         self.types = len(self)
+        # using list_comprehension in order to list down all the frequency
+        # sum function helps to add every frequency in the list_comprehension
+        # assign the value of the sign into Tokens.
         self.tokens = sum([x[1] for x in self])
         pass
 
@@ -84,13 +100,9 @@ def test_histogram(text_list):
     print('text list:', text_list)
 
     hist_dict = Dictogram(text_list)
-    # print("TYPES DICT: ", hist_dict.types)
-    # print("TOKEN DICT: ", hist_dict.tokens)
     print('dictogram:', hist_dict)
 
     hist_list = Listogram(text_list)
-    print("TYPES List: ", hist_list.types)
-    print("TOKEN List: ", hist_list.tokens)
     print('listogram:', hist_list)
 
 
